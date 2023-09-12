@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model Sports_Gym {
+  id       Int     @id @default(autoincrement())
+  name     String
+  city     City    @relation(fields: [city_id], references: [id])
+  city_id  Int
+  adress   String
+  phone    Int
+  email    String  @unique
+  password String
+  Match    Match[]
+}
+
+model City {
+  id         Int          @id @default(autoincrement())
+  name       String
+  Sports_Gym Sports_Gym[]
+  Player     Player[]
+}
+
+model Player {
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  name           String
+  password       String
+  city           City             @relation(fields: [city_id], references: [id])
+  city_id        Int
+  r_Match_Player r_Match_Player[]
+}
+
+model Match {
+  id             Int              @id @default(autoincrement())
+  datetime       DateTime
+  gym            Sports_Gym       @relation(fields: [gym_id], references: [id])
+  gym_id         Int
+  price          Int
+  r_Match_Player r_Match_Player[]
+}
+
+model r_Match_Player {
+  id        Int     @id @default(autoincrement())
+  player    Player  @relation(fields: [player_id], references: [id])
+  player_id Int
+  match     Match   @relation(fields: [match_id], references: [id])
+  match_id  Int
+  confirmed Boolean
+}
