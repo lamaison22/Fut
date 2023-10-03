@@ -16,7 +16,7 @@ model Sports_Gym {
   name     String
   city     City    @relation(fields: [city_id], references: [id])
   city_id  Int
-  adress   String
+  address   String
   phone    Int
   email    String  @unique
   password String

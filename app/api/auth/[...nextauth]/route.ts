@@ -11,11 +11,17 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        const { email, password } = credentials ?? {}
+        const { email: type_email, password } = credentials ?? {}
+        const type = type_email?.split(":")[0]
+        const email = type_email?.split(":")[1]
+        console.log(type)
+
+        const prismaUser = type === "player" ? prisma.player : prisma.sports_Gym
+
         if (!email || !password) {
           throw new Error("Missing username or password");
         }
-        const user = await prisma.player.findUnique({
+        const user = await prismaUser.findUnique({
           where: {
             email,
           },
