@@ -6,6 +6,10 @@ import { Toaster } from "react-hot-toast";
 import AuthStatus from "@/components/auth-status";
 import { Suspense } from "react";
 
+import "@mantine/core/styles.css";
+
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -34,13 +38,16 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={inter.variable}>
         <Toaster />
         <Suspense fallback="Loading...">
           {/* @ts-expect-error Async Server Component */}
           <AuthStatus />
         </Suspense>
-        {children}
+        <MantineProvider>{children}</MantineProvider>
       </body>
     </html>
   );
