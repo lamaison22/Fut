@@ -3,13 +3,15 @@ import DatePicker from "@/components/datepicker";
 import LoadingDots from "@/components/loading-dots";
 import { DateTimePicker } from "@mantine/dates";
 import { useState } from "react";
-import horarios from "../mostraHorarios/page";
+// import horarios from "../mostraHorarios/page";
+import { useParams } from "next/navigation";
 
-export default function registroHorarios() {
+export default function editarHorario() {
   const [loading, setLoading] = useState(false);
   const [dataHora, setDataHora] = useState<Date | null>(null);
+  const params=useParams()
 
-
+// aq tem q pegar do banco para poder atualizar
 
   return (
     <div>
