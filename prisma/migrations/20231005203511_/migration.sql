@@ -3,7 +3,7 @@ CREATE TABLE "Sports_Gym" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "city_id" INTEGER NOT NULL,
-    "adress" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
     "phone" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,

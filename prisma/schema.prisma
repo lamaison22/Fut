@@ -20,14 +20,14 @@ model Sports_Gym {
   phone    Int
   email    String  @unique
   password String
-  Match    Match[]
+  matches    Match[]
 }
 
 model City {
   id         Int          @id @default(autoincrement())
   name       String
-  Sports_Gym Sports_Gym[]
-  Player     Player[]
+  gyms Sports_Gym[]
+  players     Player[]
 }
 
 model Player {
@@ -37,7 +37,7 @@ model Player {
   password       String
   city           City             @relation(fields: [city_id], references: [id])
   city_id        Int
-  r_Match_Player r_Match_Player[]
+  matches r_Match_Player[]
 }
 
 model Match {
@@ -46,7 +46,7 @@ model Match {
   gym            Sports_Gym       @relation(fields: [gym_id], references: [id])
   gym_id         Int
   price          Int
-  r_Match_Player r_Match_Player[]
+  players r_Match_Player[]
 }
 
 model r_Match_Player {

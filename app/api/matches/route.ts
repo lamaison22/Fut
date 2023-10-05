@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 
 export async function GET() {
-  const matches = await prisma.match.findMany()
+  const matches = await prisma.match.findMany({ include: { players: true } })
   return Response.json(matches)
 }
 

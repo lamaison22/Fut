@@ -1,6 +1,8 @@
 'use client'
 
+import { Match } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
 
 interface ListPlayersProps{
@@ -8,46 +10,20 @@ interface ListPlayersProps{
 }
 
 export default function ListPlayers({hasButtons}: ListPlayersProps) {
-
-	const matches = [
-    {
-      id: 1,
-      datetime: new Date(Date.now()),
-      gym_id: 1,
-      price: 80,
-      players: [{
-        id: 1
-      }]
-    },
-    {
-      id: 2,
-      datetime: new Date(Date.now()),
-      gym_id: 2,
-      price: 100,
-      players: [{
-        id: 1
-      }]
-    },
-    {
-      id: 3,
-      datetime: new Date(Date.now()),
-      gym_id: 1,
-      price: 70,
-      players: [
-        {
-          id: 1
-        },
-        {
-          id: 2
-        },
-        {
-          id: 3
-        },
-      ]
-    }
-  ]
-
 	const router = useRouter();
+
+  const [matches, setMatches] = useState<Match[]>([]) 
+
+  useEffect(() => {
+    async function getMatches() {
+      const response = await fetch('/api/matches')
+      const matchList = await response.json()
+      console.log(matchList)
+      setMatches(matchList)
+    }
+
+    getMatches()
+  }, [])
   
   const handleRowClick = () => {
     router.push(`/`);
@@ -77,9 +53,7 @@ export default function ListPlayers({hasButtons}: ListPlayersProps) {
               className='border-2'
             >
               <td className="text-center py-4">{match.id}</td>
-              <td className="text-center">{`${match.datetime.getDate()}/${match.datetime.getMonth()}/${match.datetime.getFullYear()}
-								- ${match.datetime.getHours()}:${match.datetime.getMinutes()}
-							`}</td>
+              <td className="text-center">{`${new Date(match.datetime).toLocaleString('pt-br')}`}</td>
               <td className="text-center">{match.price}</td>
               <td className="text-center">{match.players.length}</td>
 							{hasButtons && (

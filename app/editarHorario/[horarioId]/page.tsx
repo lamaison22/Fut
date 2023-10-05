@@ -9,7 +9,9 @@ import { useParams } from "next/navigation";
 export default function editarHorario() {
   const [loading, setLoading] = useState(false);
   const [dataHora, setDataHora] = useState<Date | null>(null);
-  const params=useParams()
+  const params = useParams()
+
+  console.log(params)
 
 // aq tem q pegar do banco para poder atualizar
 
